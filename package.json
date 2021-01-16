@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Maplestats DPM Bot",
   "main": "dpmbot.js",
+  "engines": {
+    "node": "*",
+    "npm": "*"
+  },
   "dependencies": {
     "discord.js": "^12.5.1",
     "nodegit": "^0.27.0",
@@ -15,6 +19,14 @@
     "lint": "eslint ."
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "cheese98",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheese98/dpmbot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cheese98/dpmbot/issues"
+  },
+  "homepage": "https://github.com/cheese98/dpmbot#readme"
 }
