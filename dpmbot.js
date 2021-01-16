@@ -35,4 +35,4 @@ client.on('message', message => {
 	}
 });
 
-client.login(token.token);
+client.login(process.env.TOKEN || token.token);
