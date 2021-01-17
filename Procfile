@@ -1,1 +1,1 @@
-worker : node dpmbot.js
+worker: node dpmbot.js
