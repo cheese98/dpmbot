@@ -1,24 +1,24 @@
 var {PythonShell} = require('python-shell')
 var Git = require("nodegit");
-var fs = require("fs")
+var fs = require("fs");
+const { resolve } = require('path');
 
 module.exports = {
     name : 'update',
     execute(client, message, args) {
-        if (args == null || args[0] === 'repo'){
-            if (!fs.existsSync("./maplestory_dpm_calc")){
-                Git.Clone.clone("https://github.com/oleneyl/maplestory_dpm_calc.git", "./maplestory_dpm_calc");
+        if(args.length == 0){
+            message.reply("!update repo: update repository\n!update sheet: update DPM sheet")
+        }
+
+        if (args[0] === 'repo'){
+            if (fs.existsSync("./maplestory_dpm_calc")){
+                console.log("Delete existing repository...")
+                fs.rmdirSync("./maplestory_dpm_calc", { recursive: true });
             }
-            Git.Repository.open("./maplestory_dpm_calc").then(function(repo) {
-                repo.fetchAll({
-                    credentials: function(url, userName) {
-                        return Git.Cred.sshKeyFromAgent(userName);
-                    }
-                }).then(function() {
-                    repo.mergeBranches("master", "origin/master");
-                });
-            })
-            message.channel.send("Repository Update Finished");
+
+            console.log("Cloning the repository...");
+            Git.Clone.clone("https://github.com/oleneyl/maplestory_dpm_calc.git", "./maplestory_dpm_calc");
+            console.log("Repository Update Finished!");
         }
 
         if (args[0] === 'sheet'){
@@ -28,7 +28,7 @@ module.exports = {
             PythonShell.run('./maplestory_dpm_calc/dpm_sheet.py', options, function (err, results) {
                 if (err) throw err;
             });
-            message.channel.send("Sheet Update Finished");
+            console.log("Sheet Update Finished");
         }
     },
 }
