@@ -4,8 +4,6 @@ const fs = require('fs');
 const cooltime = new Set()
 const prefix = '!'
 
-const token = require("./token.json");
-
 client.commands = new Discord.Collection()
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -35,4 +33,14 @@ client.on('message', message => {
 	}
 });
 
-client.login(process.env.TOKEN || token.token);
+try {
+	const token = require("./token.json");
+	client.login(token.token);
+} catch (e) {
+	if (e instanceof Error && e.code === "MODULE_NOT_FOUND"){
+		client.login(process.env.TOKEN);
+	}
+    else throw e;
+}
+
+
